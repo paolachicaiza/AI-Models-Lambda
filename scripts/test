@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+export GIT_BRANCH="$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')"
+
+if [[ "$GIT_BRANCH" != "production" ]]; then
+  sam local invoke --event ./events/s3_event.json --env-vars ./env.json
+else 
+  echo ""
+  echo "[Warn]: Testing not allowed on production branch"
+  echo ""
+fi

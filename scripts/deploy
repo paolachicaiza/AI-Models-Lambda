@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+set -o allexport;
+[ -f .env ] && source .env;
+set +o allexport
+
+export DEPLOY_REGION="us-east-1"
+export AWS_PAGER=""
+export LAMBDA_NAME="ai-artifacts"
+export VERSION=$(<app.version)
+
+
+if [[ "$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')" != "production" ]];
+then
+    export BRANCH=staging
+else
+    export BRANCH=production
+fi
+ 
+
+push() {
+  aws ecr get-login-password --region $DEPLOY_REGION | docker login --username AWS --password-stdin 933878250813.dkr.ecr.$DEPLOY_REGION.amazonaws.com \
+    && docker push 933878250813.dkr.ecr.$DEPLOY_REGION.amazonaws.com/${BRANCH:0:1}-clickster-ml-lambda:latest \
+    && docker push 933878250813.dkr.ecr.$DEPLOY_REGION.amazonaws.com/${BRANCH:0:1}-clickster-ml-lambda:$VERSION
+}
+
+deploy() {
+    aws lambda update-function-code --function-name $LAMBDA_NAME --image-uri 933878250813.dkr.ecr.us-east-1.amazonaws.com/p-clickster-ml-lambda:latest --region us-east-1
+}
+
+
+push && deploy

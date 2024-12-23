@@ -1,0 +1,39 @@
+{
+
+  "Records":[
+    {
+      "eventVersion":"2.1",
+      "eventSource":"aws:s3",
+      "awsRegion":"us-east-1",
+      "eventTime":"2023-01-24T20:37:11.715Z",
+      "eventName":"ObjectCreated:Put",
+      "userIdentity":{
+        "principalId":"AWS:AIDA5S333HU66W55K4CWG"
+      },
+      "requestParameters":{
+        "sourceIPAddress":"157.100.87.203"
+      },
+      "responseElements":{
+        "x-amz-request-id":"TRT3MS50NRBGKKBV",
+        "x-amz-id-2":"TWHg5zdfLcL4yg4H7aIDE2m7EVRD2SnDWtY7iNMDtqr84RRyUrNVWmilqEkRP4vFeD3WoJLKpR2v2AYtV579Iz0IhlxPi6n1aEum6MiNulg="
+      },
+      "s3":{
+        "s3SchemaVersion":"1.0",
+        "configurationId":"060e8817-401f-4158-badd-71ee8c7d7604",
+      "bucket":{
+        "name":"ai.demo-ai-automation.clickster.io",
+      "ownerIdentity":{
+        "principalId":"A105QEAI9CVY9A"
+      },
+      "arn":"arn:aws:s3:::ai.demo-ai-automation.clickster.io"
+      },
+      "object":{
+        "key":"datasets/lpg/64d67696d692c0001a3f68cb-Tokens-ADI-ADH-ADD.csv",
+        "size":298089,
+        "eTag":"a28d268d41f9b882934d8e42457ea062",
+        "sequencer":"0063D04177A335629F"
+      }
+      }
+    }
+  ]
+}

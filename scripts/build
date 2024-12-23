@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+set -o allexport;
+[ -f .env ] && source .env;
+set +o allexport
+
+DEPLOY_REGION="us-east-1"
+export VERSION=$(<app.version)
+
+if [[ "$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')" != "production" ]];
+then
+    export BRANCH=staging
+else
+    export BRANCH=production
+fi
+
+export REQUIRED_FILES=("")
+
+if [ -z "${DEPLOY_REGION}" ]; then
+    printf "\nDEPLOY_REGION is missing or not a valid region.\n"
+    exit 1
+fi
+
+build() {
+    printf "\nBuilding project ...\n"
+    docker build . -t 933878250813.dkr.ecr.$DEPLOY_REGION.amazonaws.com/${BRANCH:0:1}-clickster-ml-lambda:latest -t 933878250813.dkr.ecr.$DEPLOY_REGION.amazonaws.com/${BRANCH:0:1}-clickster-ml-lambda:$VERSION
+}
+
+
+
+
+build
